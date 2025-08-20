@@ -1,50 +1,269 @@
-# Welcome to your Expo app 👋
+# Expo Router RSC and Authentication Flows
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern React Native application built with Expo Router 5, featuring React Server Components (RSC) and comprehensive authentication flows with role-based access control.
 
-## Get started
+## 🚀 Features
 
-1. Install dependencies
+- **Expo Router 5**: File-based routing with the latest Expo Router features
+- **React Server Components**: Server-side rendering capabilities for improved performance
+- **Authentication System**: Complete login/logout functionality with context-based state management
+- **Role-Based Access Control**: Admin and user role management
+- **Protected Routes**: Automatic route protection based on authentication status
+- **Modal Navigation**: Sheet and modal presentations for enhanced UX
+- **Pokemon API Integration**: Example of server actions with external API calls
+- **TypeScript**: Full TypeScript support for better development experience
 
+## 📱 App Screenshots
+
+### Login Screen
+<img src="screenshots/login.png" alt="Login Screen" width="300" />
+
+*The public login page where users authenticate to access the app*
+
+### Main Dashboard
+<img src="screenshots/dashboard.png" alt="Main Dashboard" width="300" />
+
+*Authenticated user dashboard with navigation tabs and quick actions*
+
+### Pokemon Tab
+<img src="screenshots/pokemon.png" alt="Pokemon Tab" width="300" />
+
+*Pokemon display with types, abilities, and sprites from the PokeAPI*
+
+### Profile Tab
+<img src="screenshots/profile.png" alt="Profile Tab" width="300" />
+
+*User profile with authentication actions and server action examples*
+
+### Admin Panel
+<img src="screenshots/admin.png" alt="Admin Panel" width="300" />
+
+*Admin-only area accessible to users with admin privileges*
+
+### Modal Presentations
+<img src="screenshots/modal.png" alt="Modal Examples" width="300" />
+
+*News modal and sheet presentations with custom styling*
+
+## 📱 App Structure
+
+```
+expo-router-rsc/
+├── app/                          # App router directory
+│   ├── _layout.tsx              # Root layout with authentication guard
+│   ├── (public)/                # Public routes (no auth required)
+│   │   ├── _layout.tsx         # Public layout
+│   │   └── index.tsx           # Login page
+│   ├── (authenticated)/         # Protected routes (auth required)
+│   │   ├── _layout.tsx         # Authenticated layout
+│   │   ├── (tabs)/             # Tab-based navigation
+│   │   │   ├── _layout.tsx     # Tab layout
+│   │   │   ├── index.tsx       # Home tab
+│   │   │   ├── pokemon.tsx     # Pokemon tab
+│   │   │   └── profile.tsx     # Profile tab
+│   │   └── (modal)/            # Modal presentations
+│   │       ├── news.tsx        # News modal
+│   │       └── sheet.tsx       # Sheet modal
+│   └── admin.tsx               # Admin-only route
+├── actions/                     # Server actions
+│   ├── pokemon.tsx             # Pokemon API integration
+│   ├── render-info.tsx         # Server-side rendering example
+│   └── server-action.tsx       # Server action example
+├── component/                   # Reusable components
+│   └── Types.tsx               # Pokemon type display component
+├── provider/                    # Context providers
+│   └── AuthProvider.tsx        # Authentication context
+└── assets/                     # Static assets
+```
+
+## 🛠️ Setup Instructions
+
+### Prerequisites
+
+- Node.js 18+ 
+- Bun (recommended) or npm
+- Expo CLI
+- iOS Simulator or Android Emulator
+
+### Installation
+
+1. **Clone the repository**
    ```bash
+   git clone <repository-url>
+   cd expo-router-rsc
+   ```
+
+2. **Install dependencies**
+   ```bash
+   bun install
+   # or
    npm install
    ```
 
-2. Start the app
-
+3. **Start the development server**
    ```bash
-   npx expo start
+   bun expo start
+   # or
+   npm run expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. **Run on device/simulator**
+   - Press `i` for iOS Simulator
+   - Press `a` for Android Emulator
+   - Scan QR code with Expo Go app on physical device
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🔐 Authentication
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Default Credentials
 
-## Get a fresh project
+- **Admin User**: `admin` / `12345`
+- **Regular User**: Any valid email/password combination
 
-When you're ready, run:
+### Authentication Flow
 
-```bash
-npm run reset-project
+1. **Login**: Users authenticate through the public login page
+2. **Route Protection**: Authenticated users can access protected routes
+3. **Role Management**: Admin users get access to additional admin routes
+4. **Context State**: Authentication state is managed globally through React Context
+
+### Protected Routes
+
+- `(authenticated)/*` - Requires valid authentication
+- `admin` - Requires admin role
+- `(public)/*` - Accessible without authentication
+
+## 🎯 Key Features Explained
+
+### Server Actions
+
+The app demonstrates React Server Components with server actions:
+
+```typescript
+// actions/pokemon.tsx
+export async function Pokemon({ id }: { id: number }) {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const json = await res.json();
+    
+    return (
+        <View>
+            <Text>{json.name}</Text>
+            {/* Pokemon details */}
+        </View>
+    );
+}
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Authentication Context
 
-## Learn more
+```typescript
+// provider/AuthProvider.tsx
+export const AuthContext = createContext<AuthContextType | null>(null);
 
-To learn more about developing your project with Expo, look at the following resources:
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+    
+    // Authentication logic
+};
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Route Protection
 
-## Join the community
+```typescript
+// app/_layout.tsx
+<Stack.Protected guard={!isAuthenticated}>
+    <Stack.Screen name="(public)" options={{ headerShown: false }} />
+</Stack.Protected>
+<Stack.Protected guard={isAuthenticated}>
+    <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
+</Stack.Protected>
+```
 
-Join our community of developers creating universal apps.
+## 🎨 UI Components
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Pokemon Types
+
+The app includes a custom Pokemon type display component with color coding:
+
+- **Normal**: Gray
+- **Fire**: Red  
+- **Water**: Blue
+- **Electric**: Yellow
+- **Grass**: Green
+- And more...
+
+### Modal Presentations
+
+- **News Modal**: Standard modal presentation
+- **Sheet Modal**: Bottom sheet with multiple detents and custom styling
+
+## 🔧 Development
+
+### Project Configuration
+
+- **TypeScript**: Strict type checking enabled
+- **ESLint**: Code quality and consistency
+- **Expo Router**: File-based routing with type safety
+- **React Native**: Cross-platform mobile development
+
+### File Naming Conventions
+
+- **Layouts**: `_layout.tsx` for route grouping
+- **Groups**: `(groupName)` for logical route organization
+- **Dynamic Routes**: `[param].tsx` for dynamic parameters
+- **Modals**: `(modal)` group for modal presentations
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+1. **"suspended by an uncached promise" Error**
+   - Ensure server actions are properly wrapped in Suspense boundaries
+   - Check that async components are used correctly
+
+2. **Authentication State Issues**
+   - Verify AuthProvider is wrapping the entire app
+   - Check context usage in components
+
+3. **Route Protection Not Working**
+   - Ensure Stack.Protected components are properly configured
+   - Verify authentication state is being passed correctly
+
+### Debug Mode
+
+Enable debug logging by setting environment variables:
+
+```bash
+export EXPO_DEBUG=true
+export EXPO_ROUTER_DEBUG=true
+```
+
+## 📚 Learning Resources
+
+- [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
+- [React Server Components](https://react.dev/learn/react-server-components)
+- [React Native Documentation](https://reactnative.dev/)
+- [Expo Documentation](https://docs.expo.dev/)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Expo team for the excellent routing solution
+- React team for Server Components
+- Pokemon API for the sample data
+- React Native community for the ecosystem
+
+---
+
+**Happy coding! 🎉**
