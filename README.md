@@ -21,7 +21,7 @@ A modern React Native application built with Expo Router 5, featuring React Serv
 *The public login page where users authenticate to access the app*
 
 ### Main Dashboard
-<img src="assets/screenshots/dashboard.png" alt="Main Dashboard" width="300" />
+<img src="assets/screenshots/profile.png" alt="Main Dashboard" width="300" />
 
 *Authenticated user dashboard with navigation tabs and quick actions*
 
@@ -34,16 +34,6 @@ A modern React Native application built with Expo Router 5, featuring React Serv
 <img src="assets/screenshots/profile.png" alt="Profile Tab" width="300" />
 
 *User profile with authentication actions and server action examples*
-
-### Admin Panel
-<img src="assets/screenshots/admin.png" alt="Admin Panel" width="300" />
-
-*Admin-only area accessible to users with admin privileges*
-
-### Modal Presentations
-<img src="screenshots/modal.png" alt="Modal Examples" width="300" />
-
-*News modal and sheet presentations with custom styling*
 
 ## 📱 App Structure
 
