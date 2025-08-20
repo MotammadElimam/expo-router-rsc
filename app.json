@@ -24,10 +24,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
-      {
-        "origin": "https://motammad-expo-router-rsc--o4njtqtc2f.expo.app"
-      },
+      [
+        "expo-router",
+        {
+          "origin": "https://motammad-expo-router-rsc--o4njtqtc2f.expo.app"
+        }
+      ],
       [
         "expo-splash-screen",
         {

@@ -16,32 +16,22 @@ A modern React Native application built with Expo Router 5, featuring React Serv
 ## 📱 App Screenshots
 
 ### Login Screen
-<img src="screenshots/login.png" alt="Login Screen" width="300" />
+<img src="@/assets/screenshots/login.png" alt="Login Screen" width="300" />
 
 *The public login page where users authenticate to access the app*
 
-### Main Dashboard
-<img src="screenshots/dashboard.png" alt="Main Dashboard" width="300" />
+### Main profile
+<img src="@/assets/screenshots/screenshots/profile.png" alt="Main Dashboard" width="300" />
 
 *Authenticated user dashboard with navigation tabs and quick actions*
 
 ### Pokemon Tab
-<img src="screenshots/pokemon.png" alt="Pokemon Tab" width="300" />
+<img src="@/assets/screenshots/screenshots/pokemon.png" alt="Pokemon Tab" width="300" />
 
 *Pokemon display with types, abilities, and sprites from the PokeAPI*
 
 ### Profile Tab
-<img src="screenshots/profile.png" alt="Profile Tab" width="300" />
-
-*User profile with authentication actions and server action examples*
-
-### Admin Panel
-<img src="screenshots/admin.png" alt="Admin Panel" width="300" />
-
-*Admin-only area accessible to users with admin privileges*
-
-### Modal Presentations
-<img src="screenshots/modal.png" alt="Modal Examples" width="300" />
+<img src="@/assets/screenshots/screenshots/profile.png" alt="Profile Tab" width="300" />
 
 *News modal and sheet presentations with custom styling*
 
