@@ -20,11 +20,6 @@ A modern React Native application built with Expo Router 5, featuring React Serv
 
 *The public login page where users authenticate to access the app*
 
-### Main Dashboard
-<img src="assets/screenshots/profile.png" alt="Main Dashboard" width="300" />
-
-*Authenticated user dashboard with navigation tabs and quick actions*
-
 ### Pokemon Tab
 <img src="assets/screenshots/pokemon.png" alt="Pokemon Tab" width="300" />
 
